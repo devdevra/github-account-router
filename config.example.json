@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "allow_writes": false,
+  "accounts": {
+    "personal": {"username": "your-personal-login", "name": "Your Name", "email": "personal@example.com"},
+    "work": {"username": "your-work-login", "name": "Your Name", "email": "work@example.com"}
+  },
+  "rules": [
+    {"repo": "your-org/*", "account": "work"},
+    {"repo": "your-personal-login/*", "account": "personal"}
+  ]
+}
