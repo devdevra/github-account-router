@@ -161,12 +161,14 @@ class IsolationTests(unittest.TestCase):
             root = Path(tmp)
             cfg = root / "config.json"
             cfg.write_text(json.dumps(config()))
-            fake = root / "gh"
+            fake = root / ("gh_stub.py" if os.name == "nt" else "gh")
             fake.write_text(f"#!{sys.executable}\nimport sys\n"
                             "assert sys.argv[1:3] == ['auth', 'token']\n"
                             "assert sys.argv[-2:] == ['--user', 'worker']\n"
                             "print('fake-child-token')\n")
             fake.chmod(0o700)
+            if os.name == "nt":
+                (root / "gh.cmd").write_text(f'@echo off\n"{sys.executable}" "{fake}" %*\n', encoding="utf-8")
             env = dict(os.environ)
             env["PATH"] = str(root) + os.pathsep + env.get("PATH", "")
             env["PYTHONPATH"] = str(Path(__file__).resolve().parents[1] / "src")

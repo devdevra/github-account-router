@@ -47,7 +47,7 @@ CLI와 MCP는 같은 라우팅 코어를 사용한다. CLI는 세션 단위, MCP
 - CLI 세션 안에서 다른 저장소로 이동한다고 자동 재선택하지 않는다. 새 run을 실행하거나 MCP 도구를 사용한다.
 - 브라우저 기본 GitHub 연결 화면과 Codex Cloud 저장소 선택기를 교체하지 않는다.
 - GitHub.com HTTPS만 지원한다. SSH, Enterprise, 자동 갱신, 하위 모듈별 계정 분기는 후속 범위다.
-- 초기 지원 대상은 Linux/macOS다. Windows는 helper 셸과 자격 증명 저장소 동작을 별도 검증한 뒤 지원한다.
+- Linux/macOS CI와 Windows 10 실기기에서 helper 셸·자격 증명 저장소·MCP stdio를 검증했다. Windows에서는 Git for Windows가 필요하다.
 - 원격 저장소 내용과 PR 설명은 비신뢰 입력이다. 내용에 담긴 지시를 계정 설정이나 실행 명령으로 해석하지 않는다.
 
 ## 후속 개발
@@ -56,10 +56,10 @@ CLI와 MCP는 같은 라우팅 코어를 사용한다. CLI는 세션 단위, MCP
 2. GitHub Enterprise 호스트별 라우팅과 서브모듈별 규칙.
 3. OAuth 또는 GitHub App 사용자 인증, 최소 권한·회수·갱신 흐름.
 4. MCP 페이지네이션, PR 상세 조회, 요청별 계정·작업·결과 감사 기록. 토큰과 본문은 기록 제외.
-5. Windows 실기기 검증과 서명된 설치 패키지.
+5. 추가 Windows 버전 검증과 서명된 설치 패키지.
 
 관리 화면은 로컬 설정을 편집하는 단계로 시작하며 공개 웹 서버에서 개인 토큰을 수집하지 않는다.
 
 ## 검증과 출시 조건
 
-오프라인 단위 테스트 외에 실제 Git credential helper와 임시 Git 저장소 커밋 작성자를 검사한다. MCP SDK가 있으면 실제 stdio 클라이언트로 도구 목록과 라우팅을 검사한다. 출시 전 두 실제 GitHub 계정으로 읽기·push·초안 PR 생성과 Claude Code/Codex 실행을 확인해야 한다. 원격 API 실사용 검증은 현재 환경의 네트워크와 유효한 인증이 필요하다.
+오프라인 단위 테스트 외에 실제 Git credential helper와 임시 Git 저장소 커밋 작성자를 검사한다. MCP SDK가 있으면 실제 stdio 클라이언트로 도구 목록과 라우팅을 검사한다. 두 실제 GitHub 계정으로 읽기·push·초안 PR 생성을 확인했다. 구체적인 결과와 미검증 범위는 [실행 검증 기록](VALIDATION.ko.md)에 유지한다. 재현용 `scripts/live_smoke.py`는 읽기 검사와 선택적인 쓰기 검사를 제공한다.

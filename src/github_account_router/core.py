@@ -6,6 +6,7 @@ import json
 import os
 import re
 import shlex
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -94,7 +95,7 @@ def clean_env() -> dict[str, str]:
 def token_for(account: dict) -> str:
     try:
         result = subprocess.run(
-            ["gh", "auth", "token", "--hostname", "github.com", "--user", account["username"]],
+            [shutil.which("gh") or "gh", "auth", "token", "--hostname", "github.com", "--user", account["username"]],
             env=clean_env(), capture_output=True, text=True, timeout=20,
         )
     except (OSError, subprocess.TimeoutExpired) as exc:
